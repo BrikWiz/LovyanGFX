@@ -339,9 +339,11 @@ namespace lgfx
   void Panel_Device::init_rst(void)
   {
     auto pin = _cfg.pin_rst;
+    Log.noticeln("Panel_Device::init_rst pin: %d", pin);
     if (pin < 0) return;
     lgfx::gpio_hi(pin);
     lgfx::pinMode(pin, pin_mode_t::output);
+    Log.noticeln("Panel_Device::init_rst pin: %d complete", pin);
   }
 
   void Panel_Device::cs_control(bool level)
