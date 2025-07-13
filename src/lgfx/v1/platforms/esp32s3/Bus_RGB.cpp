@@ -176,7 +176,7 @@ namespace lgfx
       _gpio_pin_sig(_cfg.pin_vsync, sigs->vsync_sig);
       _gpio_pin_sig(_cfg.pin_pclk, sigs->pclk_sig);
     }
-    /*
+    
     Log.noticeln("Bus_RGB::init pin setup complete");
     
     // periph_module_enable(lcd_periph_signals.panels[_cfg.port].module);
@@ -204,16 +204,15 @@ namespace lgfx
     GDMA.channel[_dma_ch].out.conf1.val = conf1.val;
 
     Log.noticeln("Bus_RGB::init GDMA channel setup complete");
-    */
-    //size_t fb_len = (_cfg.panel->width() * pixel_bytes) * _cfg.panel->height();
-    size_t fb_len = (480 * 2) * 480;
+    
+    size_t fb_len = (_cfg.panel->width() * pixel_bytes) * _cfg.panel->height();
     Log.noticeln("Free PSRAM: %u bytes\n", ESP.getFreePsram());
     Log.noticeln("Total PSRAM: %u bytes\n", ESP.getPsramSize());
     Log.noticeln("Bus_RGB::init fb_len: %d", fb_len);
     auto data = (uint8_t*)heap_alloc_psram(fb_len);
     Log.noticeln("Bus_RGB::init heap_alloc_psram fb_len: %d", fb_len);
 
-    /*
+    
     _frame_buffer = data;
     Log.noticeln("Bus_RGB::init _frame_buffer: %p", _frame_buffer);
     static constexpr size_t MAX_DMA_LEN = (4096-64);
@@ -347,7 +346,7 @@ namespace lgfx
     dev->lcd_user.lcd_update = 1;
     dev->lcd_user.lcd_start = 1;
     Log.noticeln("Bus_RGB::init lcd_user.lcd_start complete");
-    */
+    
 
     return true;
   }
