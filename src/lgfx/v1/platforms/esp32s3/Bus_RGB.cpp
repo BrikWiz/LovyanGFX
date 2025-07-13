@@ -165,6 +165,7 @@ namespace lgfx
 #else
       auto sigs = &lcd_periph_signals.panels[_cfg.port];
 #endif
+    }
 /*
     for (size_t i = 0; i < 16; i++) {
         _gpio_pin_sig(_cfg.pin_data[i], sigs->data_sigs[tbl[i]]);
