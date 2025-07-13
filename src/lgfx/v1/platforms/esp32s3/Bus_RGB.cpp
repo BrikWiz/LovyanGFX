@@ -165,6 +165,7 @@ namespace lgfx
 #else
       auto sigs = &lcd_periph_signals.panels[_cfg.port];
 #endif
+/*
     for (size_t i = 0; i < 16; i++) {
         _gpio_pin_sig(_cfg.pin_data[i], sigs->data_sigs[tbl[i]]);
       }
@@ -174,7 +175,7 @@ namespace lgfx
       _gpio_pin_sig(_cfg.pin_pclk, sigs->pclk_sig);
     }
     Log.noticeln("Bus_RGB::init pin setup complete");
-    /*
+    
     // periph_module_enable(lcd_periph_signals.panels[_cfg.port].module);
     _dma_ch = search_dma_out_ch(SOC_GDMA_TRIG_PERIPH_LCD0);
     if (_dma_ch < 0)
