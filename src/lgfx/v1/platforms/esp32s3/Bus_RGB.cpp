@@ -171,7 +171,7 @@ namespace lgfx
         _gpio_pin_sig(_cfg.pin_data[i], sigs->data_sigs[tbl[i]]);
         Log.noticeln("Bus_RGB::init pin_data[%d]: %d, sigs->data_sigs[%d]: %d", i, _cfg.pin_data[i], tbl[i], sigs->data_sigs[tbl[i]]);
       }
-      //_gpio_pin_sig(_cfg.pin_henable, sigs->de_sig);
+      _gpio_pin_sig(_cfg.pin_henable, sigs->de_sig);
       //_gpio_pin_sig(_cfg.pin_hsync, sigs->hsync_sig);
       //_gpio_pin_sig(_cfg.pin_vsync, sigs->vsync_sig);
       //_gpio_pin_sig(_cfg.pin_pclk, sigs->pclk_sig);
