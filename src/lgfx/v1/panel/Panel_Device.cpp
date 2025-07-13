@@ -80,7 +80,7 @@ namespace lgfx
     Log.traceln("Panel_Device::init::_bus->init()");
     _bus->init();
     Log.traceln("Panel_Device::init::_bus->init() complete");
-    
+    delay(100);
     rst_control(true);
     Log.traceln("Panel_Device::init::rst_control(true) complete");
     if (use_reset)
