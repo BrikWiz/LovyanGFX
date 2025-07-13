@@ -184,7 +184,7 @@ namespace lgfx
     }
 
     Log.noticeln("Bus_RGB::init _dma_ch: %d", _dma_ch);
-    /*GDMA.channel[_dma_ch].out.peri_sel.sel = SOC_GDMA_TRIG_PERIPH_LCD0;
+    GDMA.channel[_dma_ch].out.peri_sel.sel = SOC_GDMA_TRIG_PERIPH_LCD0;
 
     typeof(GDMA.channel[0].out.conf0) conf0;
     conf0.val = 0;
@@ -199,8 +199,10 @@ namespace lgfx
     GDMA.channel[_dma_ch].out.conf1.val = conf1.val;
 
     Log.noticeln("Bus_RGB::init GDMA channel setup complete");
-    */
+    
     size_t fb_len = (_cfg.panel->width() * pixel_bytes) * _cfg.panel->height();
+    Log.noticeln("Free PSRAM: %u bytes\n", ESP.getFreePsram());
+    Log.noticeln("Total PSRAM: %u bytes\n", ESP.getPsramSize());
     Log.noticeln("Bus_RGB::init fb_len: %d", fb_len);
     auto data = (uint8_t*)heap_alloc_psram(fb_len);
     Log.noticeln("Bus_RGB::init heap_alloc_psram fb_len: %d, data: %p", fb_len, data);
