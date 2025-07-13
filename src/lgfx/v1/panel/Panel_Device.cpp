@@ -85,8 +85,8 @@ namespace lgfx
     //Log.traceln("Panel_Device::init::rst_control(true) complete");
     //if (use_reset)
     //{
-     // Log.noticeln("Panel_Device::init::delay(64)");
-      delay(1000);
+    // Log.noticeln("Panel_Device::init::delay(64)");
+    //delay(64);
     //}
     Log.traceln("Panel_Device::init::command_list(_cfg.init_sequence)");
     return true;
