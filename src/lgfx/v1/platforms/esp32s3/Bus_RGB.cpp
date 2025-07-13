@@ -165,16 +165,17 @@ namespace lgfx
 #else
       auto sigs = &lcd_periph_signals.panels[_cfg.port];
 #endif
-    }
-/*
-    for (size_t i = 0; i < 16; i++) {
+    
+
+      for (size_t i = 0; i < 16; i++) {
         _gpio_pin_sig(_cfg.pin_data[i], sigs->data_sigs[tbl[i]]);
       }
-      _gpio_pin_sig(_cfg.pin_henable, sigs->de_sig);
-      _gpio_pin_sig(_cfg.pin_hsync, sigs->hsync_sig);
-      _gpio_pin_sig(_cfg.pin_vsync, sigs->vsync_sig);
-      _gpio_pin_sig(_cfg.pin_pclk, sigs->pclk_sig);
+      //_gpio_pin_sig(_cfg.pin_henable, sigs->de_sig);
+      //_gpio_pin_sig(_cfg.pin_hsync, sigs->hsync_sig);
+      //_gpio_pin_sig(_cfg.pin_vsync, sigs->vsync_sig);
+      //_gpio_pin_sig(_cfg.pin_pclk, sigs->pclk_sig);
     }
+    /*
     Log.noticeln("Bus_RGB::init pin setup complete");
     
     // periph_module_enable(lcd_periph_signals.panels[_cfg.port].module);
