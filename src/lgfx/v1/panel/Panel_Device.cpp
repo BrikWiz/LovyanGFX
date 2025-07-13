@@ -79,7 +79,6 @@ namespace lgfx
     }
     Log.noticeln("Panel_Device::init::_bus->init()");
     _bus->init();
-    Serial.flush();
     Log.noticeln("Panel_Device::init::_bus->init() complete");
     
     rst_control(true);
