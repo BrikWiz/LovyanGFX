@@ -21,7 +21,7 @@ Contributors:
 #include "../Touch.hpp"
 #include "../platforms/common.hpp"
 #include "../misc/pixelcopy.hpp"
-
+ #include <ArduinoLog.h>
 namespace lgfx
 {
  inline namespace v1
@@ -56,23 +56,36 @@ namespace lgfx
 
   bool Panel_Device::init(bool use_reset)
   {
+    Log.noticeln("Panel_Device::init");
     init_rst();
+    Log.noticeln("Panel_Device::init_rst complete");
     init_cs();
+    Log.noticeln("Panel_Device::init_cs complete");
     if (_light)
     {
+      Log.noticeln("Panel_Device::init::_light");
       _light->init(0);
+      Log.noticeln("Panel_Device::init::_light complete");
     }
+    Log.noticeln("Panel_Device::init::use_reset: %d", use_reset);
     if (use_reset)
     {
+      Log.noticeln("Panel_Device::init::rst_control(false)");
       rst_control(false);
+      Log.noticeln("Panel_Device::init::rst_control(false) complete");
       delay(8);
     }
+    Log.noticeln("Panel_Device::init::_bus->init()");
     _bus->init();
+    Log.noticeln("Panel_Device::init::_bus->init() complete");
     rst_control(true);
+    Log.noticeln("Panel_Device::init::rst_control(true) complete");
     if (use_reset)
     {
+      Log.noticeln("Panel_Device::init::delay(64)");
       delay(64);
     }
+    Log.noticeln("Panel_Device::init::command_list(_cfg.init_sequence)");
     return true;
   }
 
