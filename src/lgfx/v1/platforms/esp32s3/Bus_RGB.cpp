@@ -201,7 +201,8 @@ namespace lgfx
 
     Log.noticeln("Bus_RGB::init GDMA channel setup complete");
     */
-    size_t fb_len = (_cfg.panel->width() * pixel_bytes) * _cfg.panel->height();
+    //size_t fb_len = (_cfg.panel->width() * pixel_bytes) * _cfg.panel->height();
+    size_t fb_len = (480 * 2) * 480;
     Log.noticeln("Free PSRAM: %u bytes\n", ESP.getFreePsram());
     Log.noticeln("Total PSRAM: %u bytes\n", ESP.getPsramSize());
     Log.noticeln("Bus_RGB::init fb_len: %d", fb_len);
@@ -343,7 +344,7 @@ namespace lgfx
     dev->lcd_user.lcd_start = 1;
     Log.noticeln("Bus_RGB::init lcd_user.lcd_start complete");
     */
-   
+
     return true;
   }
 
