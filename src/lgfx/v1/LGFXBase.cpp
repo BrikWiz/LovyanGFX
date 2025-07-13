@@ -3513,28 +3513,44 @@ namespace lgfx
     Log.noticeln("LGFX_Device::init_impl");
     if (_panel)
     {
+      Log.noticeln("LGFX_Device::init_impl::_Panel");
       if (isEPD())
       {
+        Log.noticeln("LGFX_Device::init_impl::isEPD true");
         setBaseColor(TFT_WHITE);
+        Log.noticeln("Set Base Colour TFT WHITE complete");
         setTextColor(TFT_BLACK, TFT_WHITE);
+        Log.noticeln("Set Text Colour TFT BLACK, TFT_WHITE complete");
       }
       if (getPanel()->init(use_reset))
       {
+        Log.noticeln("LGFX_Device::init_impl::getPanel()->init true");
         startWrite();
+        Log.noticeln("LGFX_Device::init_impl::startWrite complete");
         invertDisplay(_panel->getInvert());
+        Log.noticeln("LGFX_Device::init_impl::invertDisplay complete");
         setColorDepth(_panel->getWriteDepth());
+        Log.noticeln("LGFX_Device::init_impl::setColorDepth complete");
         setRotation(  _panel->getRotation());
+        Log.noticeln("LGFX_Device::init_impl::setRotation complete");
         if (use_clear)
         {
+          Log.noticeln("LGFX_Device::init_impl::use_clear true");
           clear();
+          Log.noticeln("LGFX_Device::init_impl::clear complete");
         }
         setPivot(width()>>1, height()>>1);
+        Log.noticeln("LGFX_Device::init_impl::setPivot complete");
         endWrite();
+        Log.noticeln("LGFX_Device::init_impl::endWrite complete");
         setBrightness(_brightness);
+        Log.noticeln("LGFX_Device::init_impl::setBrightness complete");
         getPanel()->initTouch();
+        Log.noticeln("LGFX_Device::init_impl::getPanel()->initTouch complete");
         return true;
       }
     }
+    Log.noticeln("not LGFX_Device::init_impl::_Panel");
     return false;
   }
 
