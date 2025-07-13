@@ -220,12 +220,12 @@ namespace lgfx
     size_t dmadesc_size = (fb_len - 1) / MAX_DMA_LEN + 1;
     Log.noticeln("Bus_RGB::init dmadesc_size: %d", dmadesc_size);
     auto dmadesc = (dma_descriptor_t*)heap_caps_malloc(sizeof(dma_descriptor_t) * dmadesc_size, MALLOC_CAP_DMA);
-    Log.noticeln("Bus_RGB::init heap_caps_malloc dmadesc: %p", dmadesc);
+    Log.noticeln("Bus_RGB::init heap_caps_malloc dmadesc");
     _dmadesc = dmadesc;
-    Log.noticeln("Bus_RGB::init _dmadesc: %p", _dmadesc);
+    Log.noticeln("Bus_RGB::init _dmadesc");
 
     size_t len = fb_len;
-    Log.noticeln("Bus_RGB::init fb_len: %d, dmadesc_size: %d", fb_len, dmadesc_size);
+    Log.noticeln("Bus_RGB::init fb_len");
     while (len > MAX_DMA_LEN)
     {
       len -= MAX_DMA_LEN;
