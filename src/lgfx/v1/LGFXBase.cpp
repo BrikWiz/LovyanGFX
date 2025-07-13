@@ -3510,7 +3510,7 @@ namespace lgfx
 
   bool LGFX_Device::init_impl(bool use_reset, bool use_clear)
   {
-    println("LGFX_Device::init_impl");
+    Log.noticeln("LGFX_Device::init_impl");
     if (_panel)
     {
       if (isEPD())
