@@ -135,7 +135,7 @@ namespace lgfx
 /*/
     Log.noticeln("Bus_RGB::init");
     // dummy settings.
-    /*
+    
     esp_lcd_i80_bus_config_t bus_config;
     memset(&bus_config, 0, sizeof(esp_lcd_i80_bus_config_t));
     // bus_config.dc_gpio_num = GPIO_NUM_NC;
@@ -149,7 +149,7 @@ namespace lgfx
     bus_config.bus_width = 16;
     bus_config.max_transfer_bytes = 4092;
     Log.noticeln("Bus_RGB::init bus_config.dc_gpio_num: %d", bus_config.dc_gpio_num);
-
+    /*
     if (ESP_OK != esp_lcd_new_i80_bus(&bus_config, &_i80_bus)) {
       return false;
     }
@@ -207,7 +207,7 @@ namespace lgfx
     Log.noticeln("Total PSRAM: %u bytes\n", ESP.getPsramSize());
     Log.noticeln("Bus_RGB::init fb_len: %d", fb_len);
     auto data = (uint8_t*)heap_alloc_psram(fb_len);
-    Log.noticeln("Bus_RGB::init heap_alloc_psram fb_len: %d, data: %p", fb_len, data);
+    Log.noticeln("Bus_RGB::init heap_alloc_psram fb_len: %d", fb_len);
 
     /*
     _frame_buffer = data;
