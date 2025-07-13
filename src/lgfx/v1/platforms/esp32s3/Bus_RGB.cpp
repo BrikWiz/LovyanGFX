@@ -37,7 +37,7 @@ Contributors:
 #include <soc/gdma_channel.h>
 #include <soc/gdma_reg.h>
 #include <soc/gdma_struct.h>
-
+#include <ArduinoLog.h>
 #if __has_include (<esp_private/periph_ctrl.h>)
  #include <esp_private/periph_ctrl.h>
 #else
@@ -132,6 +132,7 @@ namespace lgfx
 
     ESP_ERROR_CHECK(esp_lcd_new_rgb_panel(&_panel_config, &_panel_handle));
 /*/
+    Log.noticeln("Bus_RGB::init");
     // dummy settings.
     esp_lcd_i80_bus_config_t bus_config;
     memset(&bus_config, 0, sizeof(esp_lcd_i80_bus_config_t));
