@@ -20,6 +20,7 @@ Contributors:
 #include "../platforms/common.hpp"
 #include "../misc/pixelcopy.hpp"
 #include "../misc/common_function.hpp"
+#include <ArduinoLog.h>
 
 #if defined (ESP_PLATFORM)
  #include <sdkconfig.h>
@@ -73,6 +74,7 @@ namespace lgfx
 
   bool Panel_FrameBufferBase::init(bool use_reset)
   {
+    Log.noticeln("Panel_FrameBufferBase::init");
 #if defined ( LGFX_USE_CACHE_WRITEBACK_ADDR )
     // キャッシュのライトバックを display メソッドで行うため、auto_displayで自動化する
     _auto_display = true;

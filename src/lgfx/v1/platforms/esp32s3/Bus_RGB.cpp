@@ -134,8 +134,7 @@ namespace lgfx
     ESP_ERROR_CHECK(esp_lcd_new_rgb_panel(&_panel_config, &_panel_handle));
 /*/
 
-    bool debug_log = false;
-    if (debug_log) {Log.noticeln("Bus_RGB::init");}
+    Log.noticeln("Bus_RGB::init");
     // dummy settings.
     
     esp_lcd_i80_bus_config_t bus_config;
@@ -150,7 +149,7 @@ namespace lgfx
     }
     bus_config.bus_width = 16;
     bus_config.max_transfer_bytes = 4092;
-    if (debug_log) {Log.noticeln("Bus_RGB::init bus_config.dc_gpio_num: %d", bus_config.dc_gpio_num);}
+    Log.traceln("Bus_RGB::init bus_config.dc_gpio_num: %d", bus_config.dc_gpio_num);
     
     if (ESP_OK != esp_lcd_new_i80_bus(&bus_config, &_i80_bus)) {
       return false;
@@ -171,7 +170,7 @@ namespace lgfx
 
       for (size_t i = 0; i < 16; i++) {
         _gpio_pin_sig(_cfg.pin_data[i], sigs->data_sigs[tbl[i]]);
-        if (debug_log) {Log.noticeln("Bus_RGB::init pin_data[%d]: %d, sigs->data_sigs[%d]: %d", i, _cfg.pin_data[i], tbl[i], sigs->data_sigs[tbl[i]]);}
+        Log.traceln("Bus_RGB::init pin_data[%d]: %d, sigs->data_sigs[%d]: %d", i, _cfg.pin_data[i], tbl[i], sigs->data_sigs[tbl[i]]);
       }
       _gpio_pin_sig(_cfg.pin_henable, sigs->de_sig);
       _gpio_pin_sig(_cfg.pin_hsync, sigs->hsync_sig);
@@ -179,7 +178,7 @@ namespace lgfx
       _gpio_pin_sig(_cfg.pin_pclk, sigs->pclk_sig);
     }
     
-    if (debug_log) {Log.noticeln("Bus_RGB::init pin setup complete");}
+    Log.traceln("Bus_RGB::init pin setup complete");
     
     // periph_module_enable(lcd_periph_signals.panels[_cfg.port].module);
     _dma_ch = search_dma_out_ch(SOC_GDMA_TRIG_PERIPH_LCD0);
@@ -190,7 +189,7 @@ namespace lgfx
       return false;
     }
 
-    if (debug_log) {Log.noticeln("Bus_RGB::init _dma_ch: %d", _dma_ch);}
+    Log.traceln("Bus_RGB::init _dma_ch: %d", _dma_ch);
     GDMA.channel[_dma_ch].out.peri_sel.sel = SOC_GDMA_TRIG_PERIPH_LCD0;
 
     typeof(GDMA.channel[0].out.conf0) conf0;
@@ -205,29 +204,29 @@ namespace lgfx
     conf1.out_ext_mem_bk_size = GDMA_LL_EXT_MEM_BK_SIZE_64B;
     GDMA.channel[_dma_ch].out.conf1.val = conf1.val;
 
-    if (debug_log) {Log.noticeln("Bus_RGB::init GDMA channel setup complete");}
+    Log.traceln("Bus_RGB::init GDMA channel setup complete");
     
     size_t fb_len = (_cfg.panel->width() * pixel_bytes) * _cfg.panel->height();
-    if (debug_log) {Log.noticeln("Free PSRAM: %u bytes\n", ESP.getFreePsram());}
-    if (debug_log) {Log.noticeln("Total PSRAM: %u bytes\n", ESP.getPsramSize());}
-    if (debug_log) {Log.noticeln("Bus_RGB::init fb_len: %d", fb_len);}
+    Log.traceln("Free PSRAM: %u bytes\n", ESP.getFreePsram());
+    Log.traceln("Total PSRAM: %u bytes\n", ESP.getPsramSize());
+    Log.traceln("Bus_RGB::init fb_len: %d", fb_len);
     auto data = (uint8_t*)heap_alloc_psram(fb_len);
-    if (debug_log) {Log.noticeln("Bus_RGB::init heap_alloc_psram fb_len: %d", fb_len);}
+    Log.traceln("Bus_RGB::init heap_alloc_psram fb_len: %d", fb_len);
 
     
     _frame_buffer = data;
-    if (debug_log) {Log.noticeln("Bus_RGB::init _frame_buffer");}
+    Log.traceln("Bus_RGB::init _frame_buffer");
     static constexpr size_t MAX_DMA_LEN = (4096-64);
-    if (debug_log) {Log.noticeln("Bus_RGB::init MAX_DMA_LEN: %d", MAX_DMA_LEN);}
+    Log.traceln("Bus_RGB::init MAX_DMA_LEN: %d", MAX_DMA_LEN);
     size_t dmadesc_size = (fb_len - 1) / MAX_DMA_LEN + 1;
-    if (debug_log) {Log.noticeln("Bus_RGB::init dmadesc_size: %d", dmadesc_size);}
+    Log.traceln("Bus_RGB::init dmadesc_size: %d", dmadesc_size);
     auto dmadesc = (dma_descriptor_t*)heap_caps_malloc(sizeof(dma_descriptor_t) * dmadesc_size, MALLOC_CAP_DMA);
-    if (debug_log) {Log.noticeln("Bus_RGB::init heap_caps_malloc dmadesc");}
+    Log.traceln("Bus_RGB::init heap_caps_malloc dmadesc");
     _dmadesc = dmadesc;
-    if (debug_log) {Log.noticeln("Bus_RGB::init _dmadesc");}
+    Log.traceln("Bus_RGB::init _dmadesc");
 
     size_t len = fb_len;
-    if (debug_log) {Log.noticeln("Bus_RGB::init fb_len");}
+    Log.traceln("Bus_RGB::init fb_len");
     while (len > MAX_DMA_LEN)
     {
       len -= MAX_DMA_LEN;
@@ -242,7 +241,7 @@ namespace lgfx
     dmadesc->next = _dmadesc;
     GDMA.channel[_dma_ch].out.link.addr = (uintptr_t)&(_dmadesc);
     GDMA.channel[_dma_ch].out.link.start = 1;
-    if (debug_log) {Log.noticeln("Bus_RGB::init GDMA descriptor setup complete");}
+    Log.traceln("Bus_RGB::init GDMA descriptor setup complete");
     //////////////////////////////////////////////
 
     memcpy(&_dmadesc_restart, _dmadesc, sizeof(_dmadesc_restart));
@@ -252,7 +251,7 @@ namespace lgfx
     _dmadesc_restart.dw0.length -= skip_bytes;
     _dmadesc_restart.dw0.size -= skip_bytes;
 
-    if (debug_log) {Log.noticeln("Bus_RGB::init _dmadesc_restart setup complete");}
+    Log.traceln("Bus_RGB::init _dmadesc_restart setup complete");
     uint32_t hsw = _cfg.hsync_pulse_width;
     uint32_t hbp = _cfg.hsync_back_porch;
     uint32_t active_width = _cfg.panel->width();
@@ -264,7 +263,7 @@ namespace lgfx
     uint32_t active_height = _cfg.panel->height();
 
     uint32_t div_a, div_b, div_n, clkcnt;
-    if (debug_log) {Log.noticeln("Bus_RGB::init calcClockDiv");}
+    Log.traceln("Bus_RGB::init calcClockDiv");
     calcClockDiv(&div_a, &div_b, &div_n, &clkcnt, 240*1000*1000, std::min<uint32_t>(_cfg.freq_write, 40000000u));
     typeof(dev->lcd_clock) lcd_clock;
     lcd_clock.lcd_clkcnt_n = std::max<uint32_t>(1u, clkcnt - 1);
@@ -277,7 +276,7 @@ namespace lgfx
     lcd_clock.lcd_clk_sel = 2; // clock_select: 1=XTAL CLOCK / 2=240MHz / 3=160MHz
     lcd_clock.clk_en = true;
     dev->lcd_clock.val = lcd_clock.val;
-    if (debug_log) {Log.noticeln("Bus_RGB::init lcd_clock setup complete");}
+    Log.traceln("Bus_RGB::init lcd_clock setup complete");
     typeof(dev->lcd_user) lcd_user;
     lcd_user.val = 0;
     // lcd_user.lcd_dout_cyclelen = 0;
@@ -296,7 +295,7 @@ namespace lgfx
     lcd_user.lcd_dummy_cyclelen = 3;
     // lcd_user.lcd_cmd_2_cycle_en = 0;
     dev->lcd_user.val = lcd_user.val;
-    if (debug_log) {Log.noticeln("Bus_RGB::init lcd_user setup complete");}
+    Log.traceln("Bus_RGB::init lcd_user setup complete");
     typeof(dev->lcd_misc) lcd_misc;
     lcd_misc.val = 0;
     lcd_misc.lcd_afifo_reset = true;
@@ -305,20 +304,20 @@ namespace lgfx
     // lcd_misc.lcd_vfk_cyclelen = 0;
     // lcd_misc.lcd_vbk_cyclelen = 0;
     dev->lcd_misc.val = lcd_misc.val;
-    if (debug_log) {Log.noticeln("Bus_RGB::init lcd_misc setup complete");}
+    Log.traceln("Bus_RGB::init lcd_misc setup complete");
     typeof(dev->lcd_ctrl) lcd_ctrl;
     lcd_ctrl.lcd_hb_front = hbp + hsw - 1;
     lcd_ctrl.lcd_va_height = active_height - 1;
     lcd_ctrl.lcd_vt_height = vsw + vbp + active_height + vfp - 1;
     lcd_ctrl.lcd_rgb_mode_en = true;
     dev->lcd_ctrl.val = lcd_ctrl.val;
-    if (debug_log) {Log.noticeln("Bus_RGB::init lcd_ctrl setup complete");}
+    Log.traceln("Bus_RGB::init lcd_ctrl setup complete");
     typeof(dev->lcd_ctrl1) lcd_ctrl1;
     lcd_ctrl1.lcd_vb_front = vbp + vsw - 1;
     lcd_ctrl1.lcd_ha_width = active_width - 1;
     lcd_ctrl1.lcd_ht_width = hsw + hbp + active_width + hfp - 1;
     dev->lcd_ctrl1.val = lcd_ctrl1.val;
-    if (debug_log) {Log.noticeln("Bus_RGB::init lcd_ctrl1 setup complete");}
+    Log.traceln("Bus_RGB::init lcd_ctrl1 setup complete");
     typeof(dev->lcd_ctrl2) lcd_ctrl2;
     lcd_ctrl2.val = 0;
     lcd_ctrl2.lcd_vsync_width = vsw - 1;
@@ -329,9 +328,9 @@ namespace lgfx
     // lcd_ctrl2.lcd_hsync_position = 0;
     lcd_ctrl2.lcd_de_idle_pol = _cfg.de_idle_high;
     dev->lcd_ctrl2.val = lcd_ctrl2.val;
-    if (debug_log) {Log.noticeln("Bus_RGB::init lcd_ctrl2 setup complete");}
+    Log.traceln("Bus_RGB::init lcd_ctrl2 setup complete");
     dev->lc_dma_int_ena.val = 1;
-    if (debug_log) {Log.noticeln("Bus_RGB::init lc_dma_int_ena setup complete");}
+    Log.traceln("Bus_RGB::init lc_dma_int_ena setup complete");
     int isr_flags = ESP_INTR_FLAG_INTRDISABLED | ESP_INTR_FLAG_SHARED;
 
 #if SOC_LCDCAM_RGB_LCD_SUPPORTED
@@ -347,7 +346,7 @@ namespace lgfx
 
     dev->lcd_user.lcd_update = 1;
     dev->lcd_user.lcd_start = 1;
-    if (debug_log) {Log.noticeln("Bus_RGB::init lcd_user.lcd_start complete");}
+    Log.noticeln("Bus_RGB::init lcd_user.lcd_start complete");
     
 
     return true;

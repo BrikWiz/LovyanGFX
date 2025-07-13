@@ -49,8 +49,9 @@ namespace lgfx
 
   bool Panel_RGB::init(bool use_reset)
   {
+     Log.noticecn("Panel_RGB::init");
     if (!Panel_FrameBufferBase::init(use_reset)) { return false; }
-
+   
     auto h = _cfg.panel_height;
 
     auto frame_buffer_ = _bus->getDMABuffer(0);
@@ -177,6 +178,7 @@ namespace lgfx
   /* Panel ST7701 base initialization */
   bool Panel_ST7701_Base::init(bool use_reset)
   {
+    Log.noticecn("Panel_ST7701_Base::init");
     if (!Panel_RGB::init(use_reset))
     {
       return false;
