@@ -35,7 +35,7 @@ namespace lgfx
 
   void Panel_Device::setBus(IBus* bus)
   {
-    static Bus_NULL nullobj;#
+    static Bus_NULL nullobj;
     Log.noticeln("Panel_Device::setBus %d", bus);
     _bus = bus ? bus : &nullobj;
     Log.noticeln("Panel_Device::setBus complete %d", _bus);
