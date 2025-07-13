@@ -135,6 +135,7 @@ namespace lgfx
 /*/
     Log.noticeln("Bus_RGB::init");
     // dummy settings.
+    /*
     esp_lcd_i80_bus_config_t bus_config;
     memset(&bus_config, 0, sizeof(esp_lcd_i80_bus_config_t));
     // bus_config.dc_gpio_num = GPIO_NUM_NC;
@@ -199,7 +200,7 @@ namespace lgfx
     GDMA.channel[_dma_ch].out.conf1.val = conf1.val;
 
     Log.noticeln("Bus_RGB::init GDMA channel setup complete");
-    
+    */
     size_t fb_len = (_cfg.panel->width() * pixel_bytes) * _cfg.panel->height();
     Log.noticeln("Free PSRAM: %u bytes\n", ESP.getFreePsram());
     Log.noticeln("Total PSRAM: %u bytes\n", ESP.getPsramSize());
