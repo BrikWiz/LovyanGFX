@@ -32,6 +32,7 @@ Contributors:
 #include <stdint.h>
 #include <math.h>
 #include <list>
+#include <ArduinoLog.h>
 
 #ifdef min
 #undef min
