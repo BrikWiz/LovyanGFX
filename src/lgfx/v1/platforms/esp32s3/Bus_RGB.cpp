@@ -214,7 +214,7 @@ namespace lgfx
 
     
     _frame_buffer = data;
-    Log.noticeln("Bus_RGB::init _frame_buffer: %p", _frame_buffer);
+    Log.noticeln("Bus_RGB::init _frame_buffer");
     static constexpr size_t MAX_DMA_LEN = (4096-64);
     Log.noticeln("Bus_RGB::init MAX_DMA_LEN: %d", MAX_DMA_LEN);
     size_t dmadesc_size = (fb_len - 1) / MAX_DMA_LEN + 1;
