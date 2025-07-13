@@ -3522,6 +3522,7 @@ namespace lgfx
         setTextColor(TFT_BLACK, TFT_WHITE);
         Log.noticeln("Set Text Colour TFT BLACK, TFT_WHITE complete");
       }
+      Log.noticeln("LGFX_Device::init_impl::getPanel()->init");
       if (getPanel()->init(use_reset))
       {
         Log.noticeln("LGFX_Device::init_impl::getPanel()->init true");
