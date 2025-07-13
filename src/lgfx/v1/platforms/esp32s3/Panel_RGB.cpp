@@ -27,7 +27,7 @@ Contributors:
 
 #include <soc/gpio_reg.h>
 #include <soc/gpio_periph.h>
-
+#include <ArduinoLog.h>
 namespace lgfx
 {
  inline namespace v1
@@ -49,7 +49,7 @@ namespace lgfx
 
   bool Panel_RGB::init(bool use_reset)
   {
-     Log.noticecn("Panel_RGB::init");
+     Log.noticeln("Panel_RGB::init");
     if (!Panel_FrameBufferBase::init(use_reset)) { return false; }
    
     auto h = _cfg.panel_height;
@@ -178,7 +178,7 @@ namespace lgfx
   /* Panel ST7701 base initialization */
   bool Panel_ST7701_Base::init(bool use_reset)
   {
-    Log.noticecn("Panel_ST7701_Base::init");
+    Log.noticeln("Panel_ST7701_Base::init");
     if (!Panel_RGB::init(use_reset))
     {
       return false;
