@@ -292,7 +292,8 @@ bool Bus_RGB::init(void)
   Log.noticeln("Bus_RGB::init() complete");
   return true;
 }
-
+ }
+}
 
 #endif
 #endif
