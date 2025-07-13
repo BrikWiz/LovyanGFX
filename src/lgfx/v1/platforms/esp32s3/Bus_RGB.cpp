@@ -346,8 +346,9 @@ namespace lgfx
 
     dev->lcd_user.lcd_update = 1;
     dev->lcd_user.lcd_start = 1;
-    Log.noticeln("Bus_RGB::init lcd_user.lcd_start complete");
+    Log.traceln("Bus_RGB::init lcd_user.lcd_start complete");
     
+    Log.noticeln("Bus_RGB::init complete");
 
     return true;
   }

@@ -81,13 +81,13 @@ namespace lgfx
     _bus->init();
     Log.traceln("Panel_Device::init::_bus->init() complete");
     
-    //rst_control(true);
-    //Log.traceln("Panel_Device::init::rst_control(true) complete");
-    //if (use_reset)
-    //{
-    // Log.noticeln("Panel_Device::init::delay(64)");
-    //delay(64);
-    //}
+    rst_control(true);
+    Log.traceln("Panel_Device::init::rst_control(true) complete");
+    if (use_reset)
+    {
+     Log.noticeln("Panel_Device::init::delay(64)");
+    delay(64);
+    }
     Log.traceln("Panel_Device::init::command_list(_cfg.init_sequence)");
     return true;
   }
