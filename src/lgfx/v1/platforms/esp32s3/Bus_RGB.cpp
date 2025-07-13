@@ -207,6 +207,8 @@ namespace lgfx
     Log.noticeln("Bus_RGB::init fb_len: %d", fb_len);
     auto data = (uint8_t*)heap_alloc_psram(fb_len);
     Log.noticeln("Bus_RGB::init heap_alloc_psram fb_len: %d, data: %p", fb_len, data);
+
+    /*
     _frame_buffer = data;
     Log.noticeln("Bus_RGB::init _frame_buffer: %p", _frame_buffer);
     static constexpr size_t MAX_DMA_LEN = (4096-64);
@@ -340,6 +342,8 @@ namespace lgfx
     dev->lcd_user.lcd_update = 1;
     dev->lcd_user.lcd_start = 1;
     Log.noticeln("Bus_RGB::init lcd_user.lcd_start complete");
+    */
+   
     return true;
   }
 
